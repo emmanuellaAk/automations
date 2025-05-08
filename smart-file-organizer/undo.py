@@ -77,6 +77,12 @@ def undo_all_moves():
 
                     # Remove the undone entry from the log
                     del lines[i]
+                    with log_path.open("w") as log_file:
+                      log_file.writelines(lines)
+                    dest_dir = Path(dest_folder)
+                    if dest_dir.exists() and not any(dest_dir.iterdir()):
+                        dest_dir.rmdir()
+                    print(f"🧹 Removed empty folder: {dest_folder}")
                 else:
                     print(f"⚠️ {file_name} not found in destination. Cannot undo this move.")
             except Exception as e:
@@ -90,4 +96,4 @@ def undo_all_moves():
 # undo_last_move()
 
 # Or run undo for all moves
-undo_all_moves()
+# undo_all_moves()
