@@ -11,7 +11,6 @@ log_path = Path("file_move_log.txt")
 redo_log_path = Path("file_redo_log.txt")
 logging.basicConfig(filename=log_path, level=logging.INFO, format="%(message)s")
 
-# ------------------- Core Logic -------------------
 
 def organize_files(folder: Path, dry_run: bool = False):
     if not folder.exists():
@@ -128,7 +127,6 @@ def redo_all():
         results.append(result["message"])
     return {"status": "done", "details": results}
 
-# ------------------- FastAPI Routes -------------------
 
 @app.post("/organize")
 def api_organize(folder: str = Query(...), dry_run: Optional[bool] = False):
