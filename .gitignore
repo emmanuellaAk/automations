@@ -1,0 +1,15 @@
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+venv/
+
+logs/
+*.log
+file_move_log.txt
+file_redo_log.txt
+
+.DS_Store
+.vscode/

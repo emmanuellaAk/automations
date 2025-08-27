@@ -1,16 +1,7 @@
-from fastapi import FastAPI, Query
 from pathlib import Path
 from datetime import datetime
 import logging
-from typing import Optional
-import shutil
-
-app = FastAPI()
-
-log_path = Path("file_move_log.txt")
-redo_log_path = Path("file_redo_log.txt")
-logging.basicConfig(filename=log_path, level=logging.INFO, format="%(message)s")
-
+from logger import log_path, redo_log_path
 
 def organize_files(folder: Path, dry_run: bool = False):
     if not folder.exists():
@@ -126,24 +117,3 @@ def redo_all():
             break
         results.append(result["message"])
     return {"status": "done", "details": results}
-
-
-@app.post("/organize")
-def api_organize(folder: str = Query(...), dry_run: Optional[bool] = False):
-    return organize_files(Path(folder), dry_run)
-
-@app.post("/undo")
-def api_undo():
-    return undo_last_move()
-
-@app.post("/undo-all")
-def api_undo_all():
-    return undo_all()
-
-@app.post("/redo")
-def api_redo():
-    return redo_last_move()
-
-@app.post("/redo-all")
-def api_redo_all():
-    return redo_all()
